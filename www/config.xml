@@ -54,23 +54,23 @@
 
     <!-- Core plugins -->
 
-    <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
-    <gap:plugin name="cordova-plugin-device" source="npm"/> 
-    <gap:plugin name="cordova-plugin-file" source="npm" /> 
-    <gap:plugin name="nl.x-services.plugins.toast"  /> 
-    <gap:plugin name="cordova-plugin-device-motion" source="npm"  />
-    <gap:plugin name="cordova-plugin-device-orientation" source="npm" />
-    <gap:plugin name="cordova-plugin-dialogs" source="npm" />
-    <gap:plugin name="cordova-plugin-file-transfer" source="npm"  /> 
-    <gap:plugin name="cordova-plugin-globalization" source="npm" />
-    <gap:plugin name="cordova-plugin-media" source="npm" />
-    <gap:plugin name="cordova-plugin-inappbrowser" source="npm" /> 
-    <gap:plugin name="cordova-plugin-network-information" source="npm" /> 
-    <gap:plugin name="cordova-plugin-splashscreen" source="npm"  /> 
-    <gap:plugin name="cordova-plugin-statusbar" source="npm"  />
-    <gap:plugin name="nl.x-services.plugins.socialsharing" /> 
-    <gap:plugin name="it.witek.cordova.plugin.background-mode" />
-    <gap:plugin name="org.apache.cordova.geolocation" />
+  <plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
+    <plugin name="cordova-plugin-device" source="npm"/> 
+    <plugin name="cordova-plugin-file" source="npm" /> 
+  <plugin name="cordova-plugin-x-socialsharing" source="npm"  />
+<plugin name="cordova-plugin-x-toast" source="npm"  />
+    <plugin name="cordova-plugin-device-motion" source="npm"  />
+    <plugin name="cordova-plugin-device-orientation" source="npm" />
+    <plugin name="cordova-plugin-dialogs" source="npm" />
+    <plugin name="cordova-plugin-file-transfer" source="npm"  /> 
+    <plugin name="cordova-plugin-globalization" source="npm" />
+    <plugin name="cordova-plugin-media" source="npm" />
+    <plugin name="cordova-plugin-inappbrowser" source="npm" /> 
+    <plugin name="cordova-plugin-network-information" source="npm" /> 
+    <plugin name="cordova-plugin-splashscreen" source="npm"  /> 
+    <plugin name="cordova-plugin-statusbar" source="npm"  />
+    <plugin name="cordova-plugin-background-mode" source="npm" />
+    <plugin name="cordova-plugin-geolocation" source="npm"  />
 
 
 <!--       <gap:plugin name="org.apache.cordova.console" />
