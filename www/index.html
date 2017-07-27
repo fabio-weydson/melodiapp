@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Radio App</title>  
+
+  <!-- All our CSS -->
+    <link rel="stylesheet" href="css/app.css">
+
+  <link rel="stylesheet" href="lib/onsen/css/onsenui.css">    
+  <link rel="stylesheet" href="css/onsen-css-components.css"> 
+  <link rel="stylesheet" href="css/roots.css">
+  <link rel="stylesheet" href="css/plugins.css">
+
+  <!-- CSS for the Radio --> 
+  <link rel="stylesheet" href="css/radio.css">
+  <script src="lib/onsen/js/angular/angular.js"></script>    
+  <script src="lib/onsen/js/angular/angular-touch.js"></script> 
+  <script src="js/angular-route.min.js"></script>
+  <script src="lib/onsen/js/onsenui.js"></script>    
+  <script src="js/jquery.js"></script>  
+  <script src="js/plugins.js"></script>  
+  <script src="cordova.js"></script>
+  <script src="js/app.js"></script>  
+  <script src="js/jquery.jplayer.min.js"></script>
+</head>
+
+<body ng-controller="networkController" style="background-image: url('images/banners/1.jpg');">    
+  <div id="radio" ng-controller="radioController" >
+    <ons-toolbar>
+      <div class="left">
+        <img src="images/radio/logo_xx.png" style="  width: 36px;
+  margin: 7px;">
+      </div>
+      <div class="center">
+        {{radioOptions.Titulo}}
+      </div>
+      <div class="right">
+        <a href="#" class="botoes" ng-click="shareMusica()"><span class="ion-android-share-alt"></span></a>
+        <a href="#" class="botoes" ng-click="AbrePedidos()"><span class="ion-android-mail"></span></a>
+        <a href="#" class="botoes" ng-click="CloseApp()"><span class="ion-close-circled"></span></a>
+      </div>
+    </ons-toolbar>
+
+    <div class="details-content glass no-scroll">
+      <div class="radiobox">
+                  <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+<div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">   
+<div role="timer" aria-label="time"></div>
+       
+        <ons-row align="center">
+          <ons-col width="15%"></ons-col>
+          <ons-col width="70%" align="center" id="display">
+          <div class="ball"></div>
+           <p class="song-title"><marquee id="titulo" class="titulo" direction="left" scrolldelay="4" scrollamount="2" behavior="slide">{{ radioOptions.Musica | limitTo: 32 }}</marquee><span class="artista">{{ radioOptions.Artista | limitTo: 35 }}</span></p>
+          <p id="stream-time" class="jp-current-time"> &#xA0;</p>
+            <span class="capa" ng-click="exibeControles()"><img ng-src="{{ radioOptions.albumArt }}" class="animate-show" id="capa" fadeIn><img ng-src="{{ TMPalbumArt }}" class="reserva"></span>
+            
+            <!-- <p id="stream-time">{{ radio.currentTime | SecondsToTimeString }}</p>   -->          
+          </ons-col>
+          <ons-col width="15%"></ons-col>
+        </ons-row>   
+        </div>     
+        <ons-row>
+          <ons-col width="15%"></ons-col>
+          <ons-col width="70%" align="center">
+          <ons-row align="center" id="controls">
+              <ons-col width="35%" align="center"><a ng-attr-active="{{ ExibeFavoritar == true  }}" href="#" class="botoes curtir" ng-click="curtir('sim')"><span class="ion-thumbsup"></span></a></ons-col>
+              <ons-col width="30%" align="center"><a href="#" id="btn-play" ng-click="startRadio()" ng-bind-html="renderHtml(buttonIcon)"><span class="ion-ios-play"></span></a></ons-col>
+              <ons-col width="35%" align="center"><a ng-attr-active="{{ ExibeFavoritar == true }}" href="#" class="botoes descurtir" ng-click="curtir('nao')"><span class="ion-thumbsdown"></span></a></ons-col>
+            </ons-row>
+            <div class="tocada"><span class="seguida">No Ar</span><span class="titulo">{{radioOptions.Programa}}</span><span class="artista">{{radioOptions.Locutor}}</span></div>
+<!--             <div class="tocada"></div> 
+ -->          </ons-col>
+          <ons-col width="15%"></ons-col>
+        </ons-row>
+
+        <ons-row align="center">
+          <ons-col width="32%"></ons-col>
+          <ons-col width="36%" align="center">
+           <!--  <a href="#" id="btn-play" ng-click="startRadio()" ng-bind-html="renderHtml(buttonIcon)"><span class="ion-ios-play"></span></a> -->
+          </ons-col>
+          <ons-col width="32%"></ons-col>
+        </ons-row>
+      </div>
+      <div class="bgbox blurs bg" id="capa_fundo" style="background-image:url('{{radioOptions.albumArt}}')" fadeIn>
+<!--         <img ng-src="{{ capa_antiga }}"  img-cache  class="blurs bg animate-show mask" fade-in /> --> 
+
+       <div class="bgbox blurs" style="background-image:url('{{TMPalbumArt}}')" id="tmp_capa" fadeIn></div> 
+      </div>
+    </div>
+
+
+  <ons-tabbar  class="redes">
+    <ons-tab ng-click="getURL(item.id);" ng-repeat="(key,item) in redes_sociais">
+      <i class="{{item.icon}}"></i><br>
+      <span class="tab-label">{{item.title}}</span>
+    </ons-tab>
+   
+  </ons-tabbar> 
+
+  <!-- Insert the modal in your index.html -->
+  <!-- Change the message to anything you want, this message will be if the user doesn't have any network connection -->
+  <ons-modal var="offlineMessage">
+   Voc&#xEA; est&#xE1; sem conex&#xE3;o de internet.
+  </ons-modal>
+   <ons-modal var="pedidos">
+   <div style="text-align: center;padding:0 5%" id="pedidos">
+    <div class="form">
+    <h2>No Ar</h2>
+      <section style="padding: 8px 0">
+        <input name="nome" type="text" class="text-input" placeholder="Seu nome" style="display: block; width: 100%">
+      </section>
+      <section style="padding: 8px 0">
+        <input name="cidade" type="text" class="text-input" placeholder="Bairro/Cidade" style="display: block;float:left; width: 75%">
+        <select name="estado" class="text-input" style="display: block;float:left; width: 20%;margin-left:5%;">
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AP">AP</option>
+                <option value="AM">AM</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MS">MS</option>
+                <option value="MT" ng-selected="true">MT</option>
+                <option value="MG">MG </option>
+                <option value="PR">PR</option>
+                <option value="PB">PB</option>
+                <option value="PA">PA</option>
+                <option value="PE">PE </option>
+                <option value="PI">PI </option>
+                <option value="RN">RN</option>
+                <option value="RS">RS</option>
+                <option value="RJ">RJ</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR </option>
+                <option value="SC">SC</option>
+                <option value="SE">SE </option>
+                <option value="SP">SP</option>
+                <option value="TO">TO </option>
+                <option value="XX">XX</option>
+              </select>
+      </section>
+      <section style="padding: 8px 0">
+        <input name="email" type="text" class="text-input" placeholder="E-mail" style="display: block; width: 100%">
+      </section>
+       <section style="padding: 8px 0">
+        <input name="musica" type="text" class="text-input" placeholder="M&#xFA;sica/Cantor" style="display: block; width: 100%">
+      </section>
+      <section style="padding: 8px 0">
+        <textarea name="comentario" class="textarea" ng-model="text2" placeholder="Seu coment&#xE1;rio/mensagem" style="width: 100%; height: 100px;"></textarea>
+      </section>
+
+      <section style="padding: 8px 0" id="botoes">
+        <ons-button modifier="medium" ng-click="enviaPedido();">Enviar</ons-button>
+        <ons-button modifier="red" ng-click="FechaPedidos();">Cancelar</ons-button>
+      </section>
+    </div>
+    <div class="enviado"></div>
+    </div>
+  </ons-modal>
+ 
+        <script>
+
+        </script>
+        <br />
+</div></body>
+</html>
