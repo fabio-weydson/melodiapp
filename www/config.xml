@@ -93,7 +93,7 @@
 
     <!-- Define app icon for each platform. -->
    
-<icon src="icon.png" />
+<icon src="icone.png" />
 <splash src="splash.png" /> 
 <!-- 
     <icon src="res/icon/android/ic_launcher.png"   gap:platform="android"    gap:qualifier="ldpi" />
