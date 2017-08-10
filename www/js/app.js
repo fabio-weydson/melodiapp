@@ -126,7 +126,7 @@
             id: '3',
             title: 'WhatsApp',
             icon: 'ion-social-whatsapp',
-            link: '(31) 0000-0000'
+            link: 'Em breve!'
         }];
 
 
