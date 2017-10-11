@@ -135,7 +135,7 @@
             title: 'Radio Melodia',
             menu: 'Melodia',
             icon: 'ion-ios7-calendar-outline',
-            ip: '172.82.131.90:8808'
+            ip: '143.208.11.104:8808'
         }];
 
         $scope.radioOptions = {
